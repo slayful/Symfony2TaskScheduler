@@ -1,0 +1,5 @@
+services:
+    tdm_scheduler.schedule_runner:
+        class: TDM\SchedulerBundle\Model\ScheduleRunner
+        arguments: 
+          - "@doctrine.odm.mongodb.document_manager"

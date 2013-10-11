@@ -1,0 +1,32 @@
+{
+    "name": "tdm/symfony-task-scheduler",
+    "type": "symfony-bundle",
+    "description": "Simple processor to allow for execution of periodic tasks.",
+    "keywords": ["symfony", "schedule", "task"],
+    "homepage": "https://github.com/TDMobility/Symfony2TaskScheduler",
+    "license": "Apache2",
+    "authors": [
+        {
+            "name": "Westin Pigott",
+            "email": "wpigott@tdmobility.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/symfony": ">=2.2.0",
+        "doctrine/mongodb-odm": ">=1.0.0-BETA8"
+    },
+    "require-dev": {
+        "doctrine/mongodb-odm-bundle": "*"        
+    },
+    "autoload": {
+        "psr-0": { "TDM\\SchedulerBundle": "" }
+    },
+    "minimum-stability": "dev",
+    "target-dir": "TDM/SchedulerBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
