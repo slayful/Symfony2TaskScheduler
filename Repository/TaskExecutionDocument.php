@@ -16,7 +16,7 @@ class TaskExecutionDocument extends DocumentRepository implements TaskExecutionR
         $qb = $this->createQueryBuilder();
         $qb->find($this->getClassName());
         $qb->field('serviceId')->equals($serviceId);
-        $qb->sort('dateTime');
+        $qb->sort('dateTime', 'desc');
         return $qb->getQuery()->getSingleResult();
     }
 

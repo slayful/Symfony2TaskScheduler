@@ -21,7 +21,8 @@ class ExecuteTasksCommand extends ContainerAwareCommand {
     protected function execute(InputInterface $input, OutputInterface $output) {
         ini_set('memory_limit', '512M');
         $results = $this->getScheduleRunner()->execute();
-        $output->writeln(count($results) . ' Scheduled tasks successfully executed.');
+        $count = count($results);
+        $output->writeln($count . ' Scheduled task' . ($count > 1 ? 's' : '') . ' identified.');
         foreach ($results as $taskId => $status) {
             if ($status)
                 $output->writeln('Task \'' . $taskId . '\' was executed.');

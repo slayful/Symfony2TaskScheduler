@@ -93,7 +93,7 @@ class ScheduleRunner implements ScheduleRunnerInterface {
         $last = $this->getTaskExecutionRepository()->getLastRun($serviceId);
         if ($last instanceof TaskExecutionInterface)
             return $last->getDateTime();
-        return new DateTime(gmmktime());
+        return new DateTime('1-1-1970');
     }
 
 }
