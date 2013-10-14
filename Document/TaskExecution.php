@@ -66,8 +66,8 @@ class TaskExecution implements TaskExecutionInterface {
         return $this->messages;
     }
 
-    public function setMessages($messages) {
-        $this->messages = $messages;
+    public function addMessage($message) {
+        $this->messages[] = $message;
     }
 
     public function getDuration() {
