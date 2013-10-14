@@ -10,7 +10,7 @@ use \DateTime;
  * Description of TaskExecution
  *
  * @author wpigott
- * @MongoDB\Document( collection="task_execution", repositoryClass="TDM\SchedulerBundle\Repository\TaskExecution"  )
+ * @MongoDB\Document( collection="task_execution", repositoryClass="TDM\SchedulerBundle\Repository\TaskExecutionDocument"  )
  */
 class TaskExecution implements TaskExecutionInterface {
 
