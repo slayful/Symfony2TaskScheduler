@@ -35,7 +35,7 @@ class ExecuteTasksCommand extends ContainerAwareCommand {
      * @return ScheduleRunnerInterface
      */
     protected function getScheduleRunner() {
-        return $this->getContainer()->get('td_mobility_scheduler.schedule_runner');
+        return $this->getContainer()->get('tdm_scheduler.schedule_runner');
     }
 
 }
