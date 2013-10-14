@@ -25,7 +25,7 @@ class ExecuteTasksCommand extends ContainerAwareCommand {
         $output->writeln($count . ' Scheduled task' . ($count > 1 ? 's' : '') . ' identified.');
         foreach ($results as $taskId => $status) {
             if ($status)
-                $output->writeln('Task \'' . $taskId . '\' was executed.');
+                $output->writeln('<info>Task \'' . $taskId . '\' was executed.</info>');
             else
                 $output->writeln('Task \'' . $taskId . '\' was not executed.');
         }
