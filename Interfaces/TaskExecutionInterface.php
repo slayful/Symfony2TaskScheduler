@@ -9,6 +9,9 @@ use \DateTime;
  * @author wpigott
  */
 interface TaskExecutionInterface {
+    
+    const STATUS_FAILED = 'FAILED';
+    const STATUS_SUCCESS = 'SUCCESS';
 
     public function getId();
 
