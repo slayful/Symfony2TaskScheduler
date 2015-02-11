@@ -48,3 +48,6 @@ A task is required to have at least the following two methods (required by the i
 * checkShouldExecute - Is passed a date time object representing the last time the task was executed.  (The DateTime is set to the unix epoch if no records are found).  This method then returns TRUE or FALSE to alert the system if it is time to process again.  This allows the task to determine when it should process.
 * execute - Receives the $taskExecution object which is then used to log details about the executed task.  All messages and logs should be stored using this object.  The status should be set to one of the possible values in the TaskExecutionInterface upon completion (or failure).
 
+## Versions ##
+
+Current version: 0.1
