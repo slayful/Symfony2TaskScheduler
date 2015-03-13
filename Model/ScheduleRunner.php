@@ -30,7 +30,7 @@ class ScheduleRunner implements ScheduleRunnerInterface {
     }
 
     /**
-     * 
+     *
      * @return ObjectManager
      */
     protected function getObjectManager() {
@@ -38,21 +38,33 @@ class ScheduleRunner implements ScheduleRunnerInterface {
     }
 
     /**
-     * 
+     *
      * @return TaskExecutionRepositoryInterface
      */
     protected function getTaskExecutionRepository() {
         return $this->getObjectManager()->getRepository('TDMSchedulerBundle:TaskExecution');
     }
 
+    /**
+     * Changing the execution so that only one task is executed.
+     * @return array
+     */
     public function execute() {
-        $tasks = array();
+        $tasks = [];
+        $alreadyExecuted = false;
         foreach ($this->services as $serviceId => $service) {
             $tasks[$serviceId] = FALSE;
             try {
-                $tasks[$serviceId] = $this->executeTask($serviceId, $service);
-                if ($tasks[$serviceId] instanceof TaskExecutionInterface)
+                if ($alreadyExecuted) {
+                    continue;
+                }
+                $execution = $tasks[$serviceId] = $this->executeTask($serviceId, $service);
+                if ($execution instanceof TaskExecutionInterface) {
+                    $alreadyExecuted = true;
+                }
+                if ($tasks[$serviceId] instanceof TaskExecutionInterface) {
                     $this->getObjectManager()->flush();
+                }
             } catch (SchedulerException $e) {
                 continue;
             }
@@ -61,7 +73,7 @@ class ScheduleRunner implements ScheduleRunnerInterface {
     }
 
     /**
-     * 
+     *
      * @param string $serviceId
      * @param ScheduledTaskInterface $service
      * @return TaskExecutionInterface|boolean
@@ -87,7 +99,7 @@ class ScheduleRunner implements ScheduleRunnerInterface {
     }
 
     /**
-     * 
+     *
      * @return TaskExecutionInterface
      */
     protected function makeTaskExecution() {
