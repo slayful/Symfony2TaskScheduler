@@ -12,6 +12,7 @@ interface TaskExecutionInterface {
     
     const STATUS_FAILED = 'FAILED';
     const STATUS_SUCCESS = 'SUCCESS';
+    const STATUS_IN_PROGRESS = 'IN_PROGRESS';
 
     public function getId();
 

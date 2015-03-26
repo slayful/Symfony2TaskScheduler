@@ -55,9 +55,6 @@ class ScheduleRunner implements ScheduleRunnerInterface {
             $tasks[$serviceId] = FALSE;
             try {
                 $tasks[$serviceId] = $this->executeTask($serviceId, $service);
-                if ($tasks[$serviceId] instanceof TaskExecutionInterface) {
-                    $this->getObjectManager()->flush();
-                }
             } catch (SchedulerException $e) {
                 continue;
             }
@@ -73,37 +70,44 @@ class ScheduleRunner implements ScheduleRunnerInterface {
      */
     private function executeTask($serviceId, ScheduledTaskInterface $service) {
         // Get the schedule and check if it should run now.
-        if (!$service->checkShouldExecute($this->getLastTimeRun($serviceId)))
+        if (!$service->checkShouldExecute($this->getLastTimeRun($serviceId))) {
             return FALSE;
+        }
 
         // Create the TaskExecution object to store the records.
-        $taskExecution = $this->makeTaskExecution();
-        $taskExecution->setDateTime(new DateTime());
-        $taskExecution->setServiceId($serviceId);
-        // Persist the TaskExecution
-        $this->getObjectManager()->persist($taskExecution);
-        $this->getObjectManager()->flush($taskExecution);
+        $taskExecution = $this->makeTaskExecution($serviceId);
 
         // Execute the task.
         $start = microtime(TRUE);
         $service->execute($taskExecution);
         $taskExecution->setDuration((microtime(TRUE) - $start) * 1000);
-
+        $this->getObjectManager()->flush();
         return $taskExecution;
     }
 
     /**
      *
+     * @param $serviceId
      * @return TaskExecutionInterface
      */
-    protected function makeTaskExecution() {
-        return new TaskExecution();
+    protected function makeTaskExecution($serviceId) {
+        $execution = new TaskExecution();
+        $execution->setDateTime(new DateTime());
+        $execution->setServiceId($serviceId);
+        $execution->setStatus(TaskExecutionInterface::STATUS_IN_PROGRESS);
+
+        // Persist the TaskExecution
+        $this->getObjectManager()->persist($execution);
+        $this->getObjectManager()->flush();
+
+        return $execution;
     }
 
     protected function getLastTimeRun($serviceId) {
         $last = $this->getTaskExecutionRepository()->getLastRun($serviceId);
-        if ($last instanceof TaskExecutionInterface)
+        if ($last instanceof TaskExecutionInterface) {
             return $last->getDateTime();
+        }
         return new DateTime('1-1-1970');
     }
 

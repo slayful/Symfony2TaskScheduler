@@ -28,10 +28,13 @@ class ExecuteTasksCommand extends ContainerAwareCommand {
         $output->writeln($count . ' Scheduled task' . ($count > 1 ? 's' : '') . ' identified.');
         foreach ($results as $taskId => $taskExecution) {
             if ($taskExecution instanceof TaskExecutionInterface) {
-                if ($taskExecution->getStatus() == TaskExecutionInterface::STATUS_SUCCESS)
+                if ($taskExecution->getStatus() == TaskExecutionInterface::STATUS_SUCCESS) {
                     $output->writeln('<info>Task \'' . $taskId . '\' was executed and was successful.</info>');
-                else
+                } else if ($taskExecution->getStatus() == TaskExecutionInterface::STATUS_IN_PROGRESS) {
+                    throw new \RuntimeException("Task should no longer be in progress");
+                } else {
                     $output->writeln('<error>Task \'' . $taskId . '\' was executed and was not successful.</error>');
+                }
             } else {
                 $output->writeln('Task \'' . $taskId . '\' was not executed.');
             }

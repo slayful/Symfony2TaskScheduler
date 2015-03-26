@@ -2,8 +2,6 @@
 
 namespace TDM\SchedulerBundle\Interfaces;
 
-use TDM\SchedulerBundle\Interfaces\ScheduledTaskInterface;
-
 /**
  *
  * @author wpigott

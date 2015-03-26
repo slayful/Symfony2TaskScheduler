@@ -2,7 +2,6 @@
 
 namespace TDM\SchedulerBundle\Interfaces;
 
-use TDM\SchedulerBundle\Interfaces\TaskExecutionInterface;
 use \DateTime;
 
 /**
