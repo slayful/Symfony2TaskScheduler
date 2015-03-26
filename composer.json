@@ -26,7 +26,7 @@
     "target-dir": "TDM/SchedulerBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1-slayful-dev"
+            "dev-slayful": "0.1-dev"
         }
     }
 }
