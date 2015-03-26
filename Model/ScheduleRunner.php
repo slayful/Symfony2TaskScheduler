@@ -51,17 +51,10 @@ class ScheduleRunner implements ScheduleRunnerInterface {
      */
     public function execute() {
         $tasks = [];
-        $alreadyExecuted = false;
         foreach ($this->services as $serviceId => $service) {
             $tasks[$serviceId] = FALSE;
             try {
-                if ($alreadyExecuted) {
-                    continue;
-                }
-                $execution = $tasks[$serviceId] = $this->executeTask($serviceId, $service);
-                if ($execution instanceof TaskExecutionInterface) {
-                    $alreadyExecuted = true;
-                }
+                $tasks[$serviceId] = $this->executeTask($serviceId, $service);
                 if ($tasks[$serviceId] instanceof TaskExecutionInterface) {
                     $this->getObjectManager()->flush();
                 }
@@ -87,14 +80,15 @@ class ScheduleRunner implements ScheduleRunnerInterface {
         $taskExecution = $this->makeTaskExecution();
         $taskExecution->setDateTime(new DateTime());
         $taskExecution->setServiceId($serviceId);
+        // Persist the TaskExecution
+        $this->getObjectManager()->persist($taskExecution);
+        $this->getObjectManager()->flush($taskExecution);
 
         // Execute the task.
         $start = microtime(TRUE);
         $service->execute($taskExecution);
         $taskExecution->setDuration((microtime(TRUE) - $start) * 1000);
 
-        // Persist the TaskExecution
-        $this->getObjectManager()->persist($taskExecution);
         return $taskExecution;
     }
 
