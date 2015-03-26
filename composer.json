@@ -17,7 +17,7 @@
         "doctrine/mongodb-odm": ">=1.0.0-BETA8"
     },
     "require-dev": {
-        "doctrine/mongodb-odm-bundle": "*"        
+        "doctrine/mongodb-odm-bundle": "*"
     },
     "autoload": {
         "psr-0": { "TDM\\SchedulerBundle": "" }
@@ -26,7 +26,7 @@
     "target-dir": "TDM/SchedulerBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1-dev"
+            "dev-master": "0.1-slayful-dev"
         }
     }
 }
